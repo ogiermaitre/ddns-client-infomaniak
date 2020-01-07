@@ -2,10 +2,14 @@ const { flatMap, startWith } = require('rxjs/operators')
 const { interval, from } = require('rxjs')
 const fetch = require('node-fetch')
 
+const {timeFormat} = require('d3-time-format')
+
 const user = process.env.USER
 const password = process.env.PASSWORD
 const domain = process.env.DOMAIN
 const period = process.env.INTERVAL || 60000
+
+const format = timeFormat("%Y-%m-%d %H:%M")
 
 let currentIp
 
@@ -36,10 +40,10 @@ const intervalStream = interval(period,0)
 
 intervalStream.subscribe(x => {
     if (currentIp !== x) {
-        console.log(`new ip ${x}`)
+        const now = new Date()
+
+        console.log(`${format(now)}: new ip ${x}`)
         currentIp = x
         updateIp(x)
-    } else {
-        console.log(`still the same ip ${currentIp}`)
     }
 });
