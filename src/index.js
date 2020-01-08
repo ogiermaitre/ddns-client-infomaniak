@@ -24,7 +24,7 @@ const getIp = () => {
         })
         .catch(() => {
             error += 1
-            console.warn(`Error while getting ip (${error}}`)
+            console.warn(`${format(new Date())}: Error while getting ip (${error})`)
         })
 }
 
